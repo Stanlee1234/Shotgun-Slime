@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://iolp4xh251hy"]
+
+[ext_resource type="Texture2D" uid="uid://bcra777v73kkn" path="res://Assets/shotgunshell-Sheet.png" id="1_ebmjs"]
+[ext_resource type="PackedScene" uid="uid://b0f5lps61r1r" path="res://Scenes/player.tscn" id="1_qxrlw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_soorf"]
+size = Vector2(1153, 77)
+
+[node name="game" type="Node2D" unique_id=508959891]
+
+[node name="Player" parent="." unique_id=2134026689 instance=ExtResource("1_qxrlw")]
+position = Vector2(203, 502)
+
+[node name="HUD" type="Control" parent="." unique_id=2138439009]
+visible = false
+z_index = 1
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD" unique_id=1265554727]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/HBoxContainer" unique_id=842118558]
+position = Vector2(40, 608)
+scale = Vector2(3, 3)
+texture = ExtResource("1_ebmjs")
+hframes = 5
+
+[node name="Sprite2D2" type="Sprite2D" parent="HUD/HBoxContainer" unique_id=2117754851]
+position = Vector2(88, 608)
+scale = Vector2(3, 3)
+texture = ExtResource("1_ebmjs")
+hframes = 5
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=395457694]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=611613168]
+position = Vector2(575.5, 606.5)
+shape = SubResource("RectangleShape2D_soorf")
+
+[node name="ColorRect" type="ColorRect" parent="Ground" unique_id=2138396581]
+offset_top = 568.0
+offset_right = 1152.0
+offset_bottom = 648.0

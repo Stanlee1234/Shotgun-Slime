@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b0f5lps61r1r"]
+
+[ext_resource type="Script" uid="uid://ctmp28axtqvca" path="res://Scripts/player.gd" id="1_6t5aa"]
+[ext_resource type="Texture2D" uid="uid://tgp6k0gccjx" path="res://Assets/Spash Screen/godot_symbol.png" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://nrv885iedc71" path="res://Assets/shotgun.png" id="2_6t5aa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
+atlas = ExtResource("1_cvnsp")
+region = Rect2(0, 0, 29, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_soorf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t5aa")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_soorf"]
+
+[node name="Player" type="CharacterBody2D" unique_id=2134026689]
+script = ExtResource("1_6t5aa")
+
+[node name="Player" type="Node2D" parent="." unique_id=779343826]
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="Player" unique_id=640706339]
+sprite_frames = SubResource("SpriteFrames_soorf")
+
+[node name="GunSprite" type="Sprite2D" parent="Player" unique_id=907801253]
+position = Vector2(29, 0)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_6t5aa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350728719]
+shape = SubResource("CircleShape2D_soorf")
