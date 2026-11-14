@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://djnfiow2a0vrw"]
+
+[ext_resource type="Texture2D" uid="uid://nrv885iedc71" path="res://Assets/shotgun.png" id="1_nxj5y"]
+[ext_resource type="Script" uid="uid://qgdka2b5v7my" path="res://Scripts/gun.gd" id="1_oqrbh"]
+
+[node name="Gun" type="Node2D" unique_id=1028153314]
+z_index = 1
+script = ExtResource("1_oqrbh")
+
+[node name="GunSprite" type="Sprite2D" parent="." unique_id=675305449]
+position = Vector2(29, 0)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_nxj5y")
