@@ -12,6 +12,7 @@
 [ext_resource type="FontFile" uid="uid://b6jcfnct2dkds" path="res://Assets/Music + SFX/augiepixel.ttf" id="9_augie"]
 [ext_resource type="Texture2D" uid="uid://bvvtiblo7ppml" path="res://Assets/target.png" id="10_target"]
 [ext_resource type="Script" uid="uid://t1r2g07clu0s" path="res://Scripts/pause_menu.gd" id="11_pause"]
+[ext_resource type="PackedScene" uid="uid://d3v6y8r4k1m2p" path="res://Scenes/torch.tscn" id="12_torch"]
 
 [sub_resource type="Gradient" id="Gradient_h4fw4"]
 interpolation_mode = 2
@@ -1213,6 +1214,14 @@ sources/2 = SubResource("TileSetAtlasSource_i6g32")
 sources/3 = SubResource("TileSetAtlasSource_v158k")
 sources/0 = SubResource("TileSetAtlasSource_ldgsr")
 
+[sub_resource type="Gradient" id="Gradient_rfjv2"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yowrb"]
+gradient = SubResource("Gradient_rfjv2")
+fill_from = Vector2(0.5, 0.3)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
 [sub_resource type="Theme" id="Theme_game_ui"]
 default_font = ExtResource("9_augie")
 default_font_size = 24
@@ -1385,9 +1394,38 @@ layer_1/name = "Bkg"
 layer_1/modulate = Color(0.65834, 0.65834, 0.6583398, 1)
 layer_1/z_index = -2
 
+[node name="DungeonTint" type="CanvasModulate" parent="." unique_id=1942817001]
+color = Color(0.3159165, 0.35104623, 0.47854525, 1)
+
+[node name="Torches" type="Node2D" parent="." unique_id=1942817002]
+position = Vector2(0, 1)
+
+[node name="Torch01" parent="Torches" unique_id=1344007582 instance=ExtResource("12_torch")]
+position = Vector2(193, 404)
+
+[node name="Torch02" parent="Torches" unique_id=2025149626 instance=ExtResource("12_torch")]
+position = Vector2(636, 365)
+
+[node name="Torch03" parent="Torches" unique_id=2001468132 instance=ExtResource("12_torch")]
+position = Vector2(996, 336)
+
+[node name="Torch06" parent="Torches" unique_id=1942574993 instance=ExtResource("12_torch")]
+position = Vector2(480, 96)
+
+[node name="Torch07" parent="Torches" unique_id=1975381110 instance=ExtResource("12_torch")]
+position = Vector2(144, -56)
+
+[node name="Torch08" parent="Torches" unique_id=303989545 instance=ExtResource("12_torch")]
+position = Vector2(608, -224)
+
+[node name="PointLight2D" type="PointLight2D" parent="Torches" unique_id=11905215]
+position = Vector2(584.00006, 222.99997)
+scale = Vector2(18.625002, 42.875004)
+texture = SubResource("GradientTexture2D_yowrb")
+
 [node name="Player" parent="." unique_id=2134026689 instance=ExtResource("1_qxrlw")]
 z_index = 0
-position = Vector2(176, -72)
+position = Vector2(160, -32)
 
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1427726030]
 

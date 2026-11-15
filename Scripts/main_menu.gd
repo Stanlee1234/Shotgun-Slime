@@ -192,7 +192,7 @@ func _basis_looking_at(world_target: Vector3) -> Basis:
 func _setup_button_group(container: Control, play_intro: bool) -> void:
 	var idx := 0
 	for child in container.get_children():
-		if child is BaseButton:
+		if child is BaseButton and (child as BaseButton).visible:
 			_setup_button(child as BaseButton, idx, play_intro)
 			idx += 1
 
@@ -498,7 +498,7 @@ func _on_back_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
-	if OS.has_feature("web") or _is_transitioning:
+	if _is_transitioning:
 		return
 	_is_transitioning = true
 	_aiming_at_player = true
@@ -507,4 +507,40 @@ func _on_quit_pressed() -> void:
 	_set_buttons_disabled(true)
 	shot_flash.color = Color(1.0, 1.0, 1.0, 1.0)
 	await get_tree().create_timer(0.25).timeout
-	get_tree().quit()
+	if OS.has_feature("web"):
+		await _quit_web()
+	else:
+		get_tree().quit()
+
+
+func _quit_web() -> void:
+	var music := get_node_or_null("/root/Music") as AudioStreamPlayer2D
+	if music != null:
+		music.stop()
+
+	var tween := create_tween()
+	tween.tween_property(shot_flash, "color", Color(0.06, 0.06, 0.09, 1.0), 0.35)
+	await tween.finished
+
+	if JavaScriptBridge != null:
+		JavaScriptBridge.eval("window.close();", true)
+
+	shot_flash.mouse_filter = Control.MOUSE_FILTER_STOP
+	var label := Label.new()
+	label.text = "Thanks for playing!\nYou can close this tab.\n\nClick anywhere to return."
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.theme = ($UI/MenuRoot as Control).theme
+	label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	label.modulate.a = 0.0
+	$UI.add_child(label)
+
+	var label_tween := create_tween()
+	label_tween.tween_property(label, "modulate:a", 1.0, 0.25)
+
+	shot_flash.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed:
+			if music != null and not music.playing:
+				music.play()
+			get_tree().reload_current_scene()
+	)

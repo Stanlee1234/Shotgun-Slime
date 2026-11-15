@@ -13,8 +13,10 @@ config_version=5
 config/name="shotgun-slime"
 run/main_scene="uid://cb2x2pvq6fjpi"
 config/features=PackedStringArray("4.7", "Forward Plus")
+boot_splash/use_filter=false
 boot_splash/image="uid://cub3oxhxk1ajg"
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 
@@ -80,3 +82,7 @@ shoot={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+
+[scene_manager]
+
+defaults/background_loading=false

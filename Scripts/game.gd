@@ -131,6 +131,8 @@ func _on_player_shot_fired() -> void:
 	if not _ending:
 		_shells_used += 1
 	add_rumble(shot_trauma, trauma_decay, max_rumble_offset)
+	if player != null and is_inside_tree():
+		get_tree().call_group(&"torches", &"on_shot_fired", player.global_position)
 
 
 func _on_player_impacted(strength: float) -> void:

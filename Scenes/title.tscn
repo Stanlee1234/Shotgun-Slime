@@ -1172,17 +1172,20 @@ layer_1/modulate = Color(0.65834, 0.65834, 0.6583398, 1)
 layer_1/z_index = -2
 
 [node name="GreenSlime2" type="Sprite2D" parent="." unique_id=544487217]
+visible = false
 position = Vector2(573, 525)
 scale = Vector2(3, 3)
 texture = ExtResource("7_ohkfa")
 
 [node name="Shotgun" type="Sprite2D" parent="." unique_id=415319824]
+visible = false
 position = Vector2(688, 551.99994)
 rotation = 0.11519173
 scale = Vector2(3, 3)
 texture = ExtResource("8_ps378")
 
 [node name="Shells" type="Node2D" parent="." unique_id=562571036]
+visible = false
 position = Vector2(504, 555)
 scale = Vector2(3, 3)
 
@@ -1195,6 +1198,7 @@ rotation = -0.40840703
 texture = ExtResource("9_wkj73")
 
 [node name="TitleTop" type="Label" parent="." unique_id=2098163098]
+visible = false
 offset_left = 366.0
 offset_top = 56.0
 offset_right = 787.0
@@ -1207,6 +1211,7 @@ text = "SHOTGUN"
 horizontal_alignment = 1
 
 [node name="TitleBottom" type="Label" parent="." unique_id=865217904]
+visible = false
 offset_left = 424.0
 offset_top = 200.0
 offset_right = 732.0
