@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://Scripts/spent_shell.gd" id="1_shell"]
+[ext_resource type="Texture2D" path="res://Assets/spent_shell.png" id="2_tex"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_shell"]
+friction = 0.85
+bounce = 0.42
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shell"]
+size = Vector2(7.5, 3)
+
+[node name="SpentShell" type="RigidBody2D" groups=["spent_shells"]]
+z_index = 0
+collision_layer = 4
+collision_mask = 1
+physics_material_override = SubResource("PhysicsMaterial_shell")
+gravity_scale = 0.9
+continuous_cd = 2
+linear_damp = 0.35
+angular_damp = 1.4
+script = ExtResource("1_shell")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_shell")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_tex")

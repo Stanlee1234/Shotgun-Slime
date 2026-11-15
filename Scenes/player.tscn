@@ -1,36 +1,27 @@
 [gd_scene format=3 uid="uid://b0f5lps61r1r"]
 
 [ext_resource type="Script" uid="uid://ctmp28axtqvca" path="res://Scripts/player.gd" id="1_6t5aa"]
-[ext_resource type="Texture2D" uid="uid://tgp6k0gccjx" path="res://Assets/Spash Screen/godot_symbol.png" id="1_cvnsp"]
+[ext_resource type="PackedScene" uid="uid://pyr16a3ph7p8" path="res://Scenes/slime_softbody.tscn" id="2_slime"]
 [ext_resource type="PackedScene" uid="uid://djnfiow2a0vrw" path="res://Scenes/gun.tscn" id="3_6t5aa"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6t5aa"]
-atlas = ExtResource("1_cvnsp")
-region = Rect2(0, 0, 29, 28)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_soorf"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6t5aa")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://4iqp85oftecs" path="res://Assets/green_slime1.png" id="3_vgqql"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_soorf"]
+radius = 8.0
 
 [node name="Player" type="CharacterBody2D" unique_id=2134026689]
+z_index = 1
+collision_layer = 0
+collision_mask = 0
 floor_stop_on_slope = false
 floor_max_angle = 0.8726646
 floor_snap_length = 2.0
 script = ExtResource("1_6t5aa")
 
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=640706339]
-sprite_frames = SubResource("SpriteFrames_soorf")
+[node name="SoftBody2D" parent="." unique_id=1085942130 instance=ExtResource("2_slime")]
+texture = ExtResource("3_vgqql")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350728719]
 shape = SubResource("CircleShape2D_soorf")
+disabled = true
 
 [node name="Gun" parent="." unique_id=1028153314 instance=ExtResource("3_6t5aa")]

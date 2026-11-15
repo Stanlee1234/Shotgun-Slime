@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://rin43ba6n7k5"]
+
+[ext_resource type="AudioStream" uid="uid://cuyxgtrwwbr7a" path="res://Assets/Music + SFX/Soul Mind - Es Jammy Jam.mp3" id="1_fbmny"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" unique_id=674020358]
+stream = ExtResource("1_fbmny")
+volume_db = -10.0
+autoplay = true

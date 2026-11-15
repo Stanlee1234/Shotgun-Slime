@@ -1,29 +1,335 @@
 [gd_scene format=3 uid="uid://ddrrjo2wym65b"]
 
-[ext_resource type="Script" uid="uid://bupybm7s0fk76" path="res://Scripts/main_menu.gd" id="1_28flt"]
+[ext_resource type="Script" uid="uid://bupybm7s0fk76" path="res://Scripts/main_menu.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://b6jcfnct2dkds" path="res://Assets/Music + SFX/augiepixel.ttf" id="2_augie"]
+[ext_resource type="Texture2D" uid="uid://bvvtiblo7ppml" path="res://Assets/target.png" id="3_target"]
+[ext_resource type="Texture2D" uid="uid://4iqp85oftecs" path="res://Assets/green_slime1.png" id="4_slime"]
+[ext_resource type="PackedScene" uid="uid://cq4y3uvk8xhr3" path="res://Assets/Models/shotgun.glb" id="5_shotgun"]
+[ext_resource type="Texture2D" uid="uid://bvhqfdn25pgf3" path="res://Assets/stone_floor_tile.png" id="6_floor"]
+[ext_resource type="Texture2D" uid="uid://bcra777v73kkn" path="res://Assets/shotgunshell-Sheet.png" id="7_shell"]
 
-[node name="Main Menu" type="Control" unique_id=2073124456]
+[sub_resource type="Environment" id="Environment_dungeon"]
+background_mode = 1
+background_color = Color(0.106, 0.11, 0.157, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.62, 0.68, 0.72, 1)
+ambient_light_energy = 0.55
+fog_enabled = true
+fog_light_color = Color(0.106, 0.11, 0.157, 1)
+fog_density = 0.065
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor"]
+albedo_color = Color(0.9, 0.92, 0.95, 1)
+albedo_texture = ExtResource("6_floor")
+metallic_specular = 0.0
+uv1_scale = Vector3(28, 28, 1)
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+size = Vector2(26, 26)
+
+[sub_resource type="Theme" id="Theme_main_menu"]
+default_font = ExtResource("2_augie")
+default_font_size = 24
+Label/colors/font_color = Color(0.9607843, 1, 0.9490196, 1)
+Label/colors/font_outline_color = Color(0.039215688, 0.039215688, 0.05882353, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.85)
+Label/constants/outline_size = 6
+Label/constants/shadow_offset_x = 0
+Label/constants/shadow_offset_y = 2
+Label/font_sizes/font_size = 24
+Label/fonts/font = ExtResource("2_augie")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shell_grabber"]
+atlas = ExtResource("7_shell")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_slider_track"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+texture = ExtResource("3_target")
+texture_margin_left = 3.0
+texture_margin_top = 4.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+modulate_color = Color(0.3, 0.3, 0.36, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_slider_fill"]
+texture = ExtResource("3_target")
+texture_margin_left = 3.0
+texture_margin_top = 4.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_slider_fill_hl"]
+texture = ExtResource("3_target")
+texture_margin_left = 3.0
+texture_margin_top = 4.0
+texture_margin_right = 3.0
+texture_margin_bottom = 4.0
+modulate_color = Color(1, 0.98, 0.82, 1)
+
+[node name="Main Menu" type="Node3D" unique_id=2073124456]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=236061269]
+environment = SubResource("Environment_dungeon")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1730063876]
+transform = Transform3D(1, 0, 0, 0, 0.996195, 0.0871557, 0, -0.0871557, 0.996195, 0, 1.15, 3.6)
+fov = 46.0
+
+[node name="FlatLight" type="DirectionalLight3D" parent="." unique_id=255411571]
+transform = Transform3D(0.968912, -0.129274, 0.210884, 0, 0.852525, 0.522687, -0.247404, -0.506438, 0.826022, 0, 3, 0)
+light_color = Color(0.96, 0.94, 0.88, 1)
+light_energy = 1.45
+shadow_enabled = true
+shadow_bias = 0.02
+directional_shadow_mode = 0
+directional_shadow_max_distance = 18.0
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1247052239]
+material_override = SubResource("StandardMaterial3D_floor")
+mesh = SubResource("PlaneMesh_floor")
+
+[node name="SlimeRoot" type="Node3D" parent="." unique_id=1706329024]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -1.25, 0, 0.15)
+
+[node name="SlimeSquash" type="Node3D" parent="SlimeRoot" unique_id=1876991955]
+
+[node name="SlimeSprite" type="Sprite3D" parent="SlimeRoot/SlimeSquash" unique_id=1876991956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.572, 0)
+cast_shadow = 2
+pixel_size = 0.052
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("4_slime")
+
+[node name="GunPivot" type="Node3D" parent="SlimeRoot" unique_id=800460313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66, 0.52, 0.14)
+
+[node name="ShotgunModel" parent="SlimeRoot/GunPivot" unique_id=493617924 instance=ExtResource("5_shotgun")]
+transform = Transform3D(-2.71011e-08, 0, 0.62, 0, 0.62, 0, -0.62, 0, -2.71011e-08, 0, 0, -0.5)
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="." unique_id=2035800907]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1561502578]
+
+[node name="MenuRoot" type="Control" parent="UI" unique_id=2102272899]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_28flt")
+mouse_filter = 2
+theme = SubResource("Theme_main_menu")
 
-[node name="Start" type="Button" parent="." unique_id=1992481459]
+[node name="MenuPanel" type="Control" parent="UI/MenuRoot" unique_id=506854547]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 6
+anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -144.0
-offset_top = -12.0
-offset_right = 143.0
-offset_bottom = 19.0
+offset_left = -380.0
+offset_top = -196.0
+offset_right = -56.0
+offset_bottom = 196.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TitleTop" type="Label" parent="UI/MenuRoot/MenuPanel" unique_id=894190988]
+layout_mode = 0
+offset_left = -68.0
+offset_top = -104.0
+offset_right = 343.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0.9607843, 1, 0.9490196, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 130
+text = "SHOTGUN"
+horizontal_alignment = 2
+
+[node name="TitleBottom" type="Label" parent="UI/MenuRoot/MenuPanel" unique_id=894190989]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 16.0
+offset_right = 336.0
+offset_bottom = 142.0
+theme_override_colors/font_color = Color(0.5568628, 0.9411765, 0.34509805, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 130
+text = "SLIME"
+horizontal_alignment = 2
+
+[node name="MenuClip" type="Control" parent="UI/MenuRoot/MenuPanel" unique_id=606060601]
+clip_contents = true
+anchors_preset = 0
+offset_top = 152.0
+offset_right = 324.0
+offset_bottom = 368.0
+mouse_filter = 2
+
+[node name="MenuList" type="Control" parent="UI/MenuRoot/MenuPanel/MenuClip" unique_id=1610967933]
+anchors_preset = 0
+offset_right = 324.0
+offset_bottom = 216.0
+mouse_filter = 2
+
+[node name="Start" type="TextureButton" parent="UI/MenuRoot/MenuPanel/MenuClip/MenuList" unique_id=1992481459]
+texture_filter = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 10.0
+offset_right = 308.0
+offset_bottom = 58.0
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_bottom = NodePath("../Options")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_target")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/MenuRoot/MenuPanel/MenuClip/MenuList/Start" unique_id=1498213001]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
+[node name="Options" type="TextureButton" parent="UI/MenuRoot/MenuPanel/MenuClip/MenuList" unique_id=2125944251]
+texture_filter = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 74.0
+offset_right = 308.0
+offset_bottom = 122.0
+focus_neighbor_top = NodePath("../Start")
+focus_neighbor_bottom = NodePath("../Quit")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_target")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/MenuRoot/MenuPanel/MenuClip/MenuList/Options" unique_id=1498213002]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Quit" type="TextureButton" parent="UI/MenuRoot/MenuPanel/MenuClip/MenuList" unique_id=2003977827]
+texture_filter = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 138.0
+offset_right = 308.0
+offset_bottom = 186.0
+focus_neighbor_top = NodePath("../Options")
+focus_neighbor_bottom = NodePath("../Start")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_target")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/MenuRoot/MenuPanel/MenuClip/MenuList/Quit" unique_id=1498213003]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsList" type="Control" parent="UI/MenuRoot/MenuPanel/MenuClip" unique_id=1193498457]
+visible = false
+anchors_preset = 0
+offset_left = 332.0
+offset_right = 656.0
+offset_bottom = 216.0
+mouse_filter = 2
+
+[node name="VolumeLabel" type="Label" parent="UI/MenuRoot/MenuPanel/MenuClip/OptionsList" unique_id=1799742525]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 20.0
+offset_right = 308.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 20
+text = "Volume 50%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VolumeSlider" type="HSlider" parent="UI/MenuRoot/MenuPanel/MenuClip/OptionsList" unique_id=1799742524]
+texture_filter = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 56.0
+offset_right = 212.0
+offset_bottom = 72.0
+scale = Vector2(2, 2)
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_bottom = NodePath("../Back")
+mouse_default_cursor_shape = 2
+theme_override_icons/grabber = SubResource("AtlasTexture_shell_grabber")
+theme_override_icons/grabber_highlight = SubResource("AtlasTexture_shell_grabber")
+theme_override_styles/slider = SubResource("StyleBoxTexture_slider_track")
+theme_override_styles/grabber_area = SubResource("StyleBoxTexture_slider_fill")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxTexture_slider_fill_hl")
+step = 5.0
+value = 50.0
+
+[node name="Back" type="TextureButton" parent="UI/MenuRoot/MenuPanel/MenuClip/OptionsList" unique_id=1799742512]
+texture_filter = 1
+layout_mode = 0
+offset_left = 116.0
+offset_top = 122.0
+offset_right = 308.0
+offset_bottom = 170.0
+focus_neighbor_top = NodePath("../VolumeSlider")
+focus_neighbor_bottom = NodePath("../VolumeSlider")
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("3_target")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/MenuRoot/MenuPanel/MenuClip/OptionsList/Back" unique_id=1799742522]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShotFlash" type="ColorRect" parent="UI" unique_id=2049182736]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="pressed" from="UI/MenuRoot/MenuPanel/MenuClip/MenuList/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="UI/MenuRoot/MenuPanel/MenuClip/MenuList/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="UI/MenuRoot/MenuPanel/MenuClip/MenuList/Quit" to="." method="_on_quit_pressed"]
+[connection signal="drag_ended" from="UI/MenuRoot/MenuPanel/MenuClip/OptionsList/VolumeSlider" to="." method="_on_volume_drag_ended"]
+[connection signal="mouse_entered" from="UI/MenuRoot/MenuPanel/MenuClip/OptionsList/VolumeSlider" to="." method="_on_volume_slider_mouse_entered"]
+[connection signal="value_changed" from="UI/MenuRoot/MenuPanel/MenuClip/OptionsList/VolumeSlider" to="." method="_on_volume_changed"]
+[connection signal="pressed" from="UI/MenuRoot/MenuPanel/MenuClip/OptionsList/Back" to="." method="_on_back_pressed"]
